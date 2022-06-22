@@ -6,19 +6,16 @@ using Serilog;
 using System.Reflection;
 using RefactorThis.Core.Common.Behaviours;
 using RefactorThis.Core.Common.Interfaces;
-using RefactorThis.Core.Projects.Commands;
-using RefactorThis.Core.Projects.Queries;
+using RefactorThis.Core.Products.Queries;
 using RefactorThis.Infrastructure.Persistence;
-using RefactorThis.Core.Products.Commands;
+using RefactorThis.Core.Products.Commands.Create;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("Default");
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -38,7 +35,7 @@ try
     builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 #pragma warning restore CS8603 // Possible null reference return.
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-    builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
     builder.Services.AddAuthentication("Bearer")
         .AddJwtBearer("Bearer", options =>
@@ -53,11 +50,8 @@ try
     {
         optoins.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "RefactorThis_portal_development"));
     });
-    //builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-    //builder.Services.AddMediatR(typeof(Program).GetTypeInfo().Assembly);
 
-    builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly, typeof(GetProductsQuery).Assembly);
-
+    builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly, typeof(GetProductsQuery).Assembly);   
     builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
     builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
@@ -83,8 +77,7 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
-    app.UseSerilogRequestLogging();
-   // app.UseMiddleware<SerilogRequestLogger>();
+    app.UseSerilogRequestLogging();  
 
 
     app.Run();

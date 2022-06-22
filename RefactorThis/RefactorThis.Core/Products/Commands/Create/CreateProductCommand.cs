@@ -2,17 +2,17 @@
 using RefactorThis.Core.Common.Interfaces;
 using RefactorThis.Domain.Models.Products;
 
-namespace RefactorThis.Core.Products.Commands
+namespace RefactorThis.Core.Products.Commands.Create
 {
     public class CreateProductCommand : IRequest<Guid>
-    {        
+    {
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public decimal Price { get; set; }
 
-        public decimal DeliveryPrice { get; set; }       
+        public decimal DeliveryPrice { get; set; }
         public bool IsNew { get; }
     }
 
@@ -22,7 +22,7 @@ namespace RefactorThis.Core.Products.Commands
 
         public CreateProductCommandHandler(IApplicationDbContext context)
         {
-            _context = context;            
+            _context = context;
         }
         public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using RefactorThis.Domain.Models.Products;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,27 +12,19 @@ namespace RefactorThis.Core.Common.ViewModels
 {
     public class ProductVm
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
         public string Description { get; set; }
 
         public decimal Price { get; set; }
 
         public decimal DeliveryPrice { get; set; }
-
-        [JsonIgnore]
         public bool IsNew { get; }
-        
 
-        public DateTime CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
+        //public void Mapping(Profile profile)
+        //{
+        //    profile.CreateMap<Product, ProductVm>().ReverseMap();
 
-        public int? CreatedUserId { get; set; } = 0;
-
-        public int? UpdatedUserId { get; set; }
-
-        [Timestamp]
-        public byte[]? RowVersion { get; set; }
+        //}
     }
 }

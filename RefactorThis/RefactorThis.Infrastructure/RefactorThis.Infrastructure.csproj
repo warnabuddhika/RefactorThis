@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RefactorThis.Core\RefactorThis.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Configurations\" />
     <Folder Include="Helpers\" />
     <Folder Include="Migrations\" />
@@ -30,6 +26,10 @@
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RefactorThis.Core\RefactorThis.Core.csproj" />
   </ItemGroup>
 
 </Project>
