@@ -1,0 +1,30 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.RollingFile.Extension", "Serilog.Sinks.Seq" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning"
+      }
+    },
+    "Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId" ],
+    "WriteTo": [
+      {
+        "Name": "RollingFile",
+        "Args": {
+          "retainedFileCountLimit": 10,
+          "rollingInterval": "Day",
+          "pathFormat": "C://logs/gateway_{Date}.log"
+        }
+      },
+      {
+        "Name": "Seq",
+        "Args": {
+          "serverUrl": "http://localhost:5341",
+          "apiKey": "9jEIP2r29Qbtff0xdR9v"
+        }
+      }
+    ]
+  }
+}

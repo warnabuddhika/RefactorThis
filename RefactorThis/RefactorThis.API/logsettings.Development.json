@@ -1,0 +1,45 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.RollingFile.Extension", "Serilog.Sinks.Seq" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning"
+      }
+    },
+    "Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId" ],
+    "WriteTo": [
+      {
+        "Name": "Logger",
+        "Args": {
+          "configureLogger": {
+        
+            "WriteTo": [
+              {
+                "Name": "File",
+                "Args": {
+                  "path": "C://logs/RefactorThis_.log",
+                  "outputTemplate": "{Timestamp:o} [{Level:u3}] ({SourceContext}) {Message}{NewLine}{Exception}",
+                  "rollingInterval": "Day",
+                  "retainedFileCountLimit": 10
+                }
+              }
+            ]
+          }
+        }
+      },
+  
+      {
+        "Name": "Seq",
+        "Args": {
+          "serverUrl": "http://localhost:5341",
+          "apiKey": "YZqJzjCjOKNHokWdrnj5"
+        }
+      }
+    ],
+    "Properties": {
+      "Application": "RefactorThis.Api"
+    }
+  }
+}
