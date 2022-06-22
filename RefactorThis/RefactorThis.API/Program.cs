@@ -9,6 +9,7 @@ using RefactorThis.Core.Common.Interfaces;
 using RefactorThis.Core.Products.Queries;
 using RefactorThis.Infrastructure.Persistence;
 using RefactorThis.Core.Products.Commands.Create;
+using RefactorThis.Core.ProductOptions.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,7 +52,7 @@ try
         optoins.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "RefactorThis_portal_development"));
     });
 
-    builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly, typeof(GetProductsQuery).Assembly);   
+    builder.Services.AddMediatR(typeof(CreateProductCommand).Assembly, typeof(GetProductsQuery).Assembly, typeof(GetProductOptionsQuery).Assembly);   
     builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
     builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));

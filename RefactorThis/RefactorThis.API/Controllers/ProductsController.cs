@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RefactorThis.Core.Common.ViewModels;
+using RefactorThis.Core.ProductOptions.Queries;
 using RefactorThis.Core.Products.Commands.Create;
 using RefactorThis.Core.Products.Commands.Update;
 using RefactorThis.Core.Products.Queries;
@@ -10,6 +11,9 @@ namespace RefactorThis.Api.Controllers
     [ApiController]
     public class ProductsController : ApiController
     {
+        #region Product
+
+        #region POST method
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -17,7 +21,9 @@ namespace RefactorThis.Api.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
+        #endregion
 
+        #region PUT method
         [HttpPut("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -25,7 +31,9 @@ namespace RefactorThis.Api.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
+        #endregion
 
+        #region GET method
         [HttpDelete("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -39,7 +47,7 @@ namespace RefactorThis.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductVm>> GetProduct(Guid id)
         {
-            return Ok(await Mediator.Send(new GetProductsQuery { ProductId = id }));
+            return Ok(await Mediator.Send(new GetProductOptionsQuery { ProductId = id }));
         }
 
         [HttpGet]
@@ -59,5 +67,12 @@ namespace RefactorThis.Api.Controllers
         {
             return Ok(await Mediator.Send(new GetProductsByNameQuery { Name = name }));
         }
+        #endregion
+
+        #endregion
+
+        #region ProductOptions
+  
+        #endregion
     }
 }

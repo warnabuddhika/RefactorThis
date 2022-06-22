@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RefactorThis.Core.Common.Interfaces;
+using RefactorThis.Domain.Models.Products;
 
-namespace RefactorThis.Core.Products.Commands.Update
+namespace RefactorThis.Core.ProductOption.Commands.Update
 {
-    public class UpdateProductCommand : IRequest<Guid>
+    public class UpdateProductOptionCommand : IRequest<Guid>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -17,15 +18,15 @@ namespace RefactorThis.Core.Products.Commands.Update
         public bool IsNew { get; }
     }
 
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Guid>
+    public class UpdateProductOptionCommandHandler : IRequestHandler<UpdateProductOptionCommand, Guid>
     {
         private readonly IApplicationDbContext _context;
 
-        public UpdateProductCommandHandler(IApplicationDbContext context)
+        public UpdateProductOptionCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task<Guid> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(UpdateProductOptionCommand request, CancellationToken cancellationToken)
         {
             var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == request.Id);
 

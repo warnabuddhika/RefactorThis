@@ -64,6 +64,7 @@ namespace RefactorThis.Infrastructure.Persistence
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductOption> ProductOptions { get; set; }
 
         private void Configure(ModelBuilder modelBuilder)
         {
